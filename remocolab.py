@@ -189,7 +189,7 @@ def _setupSSHDImpl(public_key, tunnel, ngrok_token, ngrok_region, mount_gdrive_t
     hostname = m.group(1)
     port = m.group(2)
     ssh_common_options += f" -p {port}"
-  elif tunnel == "argotunnel":
+  elif tunnel == "ngrok":
     _download("https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64", "cloudflared")
     #shutil.unpack_archive("cloudflared.tgz")
     pathlib.Path("cloudflared").chmod(stat.S_IXUSR)
@@ -241,9 +241,9 @@ def _setupSSHDMain(public_key, tunnel, ngrok_region, check_gpu_available, mount_
     print("As ngrok doesn't work on colab for long time, default tunnel method has been changed to Argo tunnel.")
     print("Please read this for more details:")
     print("https://github.com/demotomohiro/remocolab/blob/master/README.md")
-    tunnel = "argotunnel"
+    tunnel = "ngrok"
 
-  avail_tunnels = {"ngrok", "argotunnel"}
+  avail_tunnels = {"ngrok", "ngrok"}
   if tunnel not in avail_tunnels:
     raise RuntimeError("tunnel argument must be one of " + str(avail_tunnels))
 
